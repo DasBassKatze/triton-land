@@ -179,7 +179,6 @@ body {
     overflow-y: auto;
     overflow-x: hidden;
     height: 100dvh;
-    scroll-snap-type: y proximity;
     scroll-behavior: smooth;
     overscroll-behavior: contain;
     -webkit-overflow-scrolling: touch;
@@ -200,8 +199,6 @@ body {
     min-height: 100dvh;
     overflow: hidden;
     isolation: isolate;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 }
 
 /* ============================================================
@@ -544,8 +541,6 @@ body {
     width: 100%;
     min-height: 100dvh;
     isolation: isolate;
-    scroll-snap-align: start;
-    scroll-snap-stop: always;
 
     display: flex;
     align-items: center;
@@ -1238,14 +1233,7 @@ body {
     .footer__top { order: 3; }
 
     .page-body {
-        scroll-snap-type: none;
         scroll-behavior: auto;
-    }
-    .hero,
-    .result,
-    .section {
-        scroll-snap-align: none;
-        scroll-snap-stop: normal;
     }
 }
 
@@ -1266,7 +1254,6 @@ body {
 @media (prefers-reduced-motion: reduce) {
     .page-body {
         scroll-behavior: auto;
-        scroll-snap-type: none;
     }
 
     .hero__photo,
