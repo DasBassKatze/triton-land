@@ -5,11 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Triton Touring</title>
     <script>document.documentElement.classList.remove('no-js');</script>
+    <link rel="icon" href="favicon.ico" sizes="32x32">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header class="header" id="site-header">
-        <img class="header__logo" src="img/logo_main_menu.svg" alt="Triton">
+        <a class="header__logo" href="#top" aria-label="Triton — на главный экран">
+            <img class="header__logo-img" src="img/logo_main_menu.svg" alt="Triton">
+        </a>
 
         <button
             class="header__burger"
@@ -42,7 +45,7 @@
                         <h1 class="hero__title">
                             <img class="hero__logo" src="img/logo_main_menu.svg" alt="Triton">
                         </h1>
-                        <p class="hero__tagline">Аренда сценического оборудования.</p>
+                        <p class="hero__tagline">Аренда профессионального <br>концертного оборудования.</p>
                         <p class="hero__subtitle">Технические решения для событий <br>без права на ошибку.</p>
                     </div>
                     <div class="hero__contacts">
@@ -169,14 +172,22 @@
         <section class="section section--contacts" id="contacts" data-parallax-section>
             <div class="contacts__bg" data-parallax-bg data-speed="0.15"></div>
             <div class="section__inner contacts">
-                <div class="contacts__links">
-                    <a class="contacts__link" href="tel:+79003662120">+7 900 366 21 20</a>
-                    <a class="contacts__link" href="mailto:32tritona@gmail.com">32tritona@gmail.com</a>
+                <div class="contacts__about">
+                    <img class="contacts__logo" src="img/logo_main_menu.svg" alt="Triton" loading="lazy">
+                    <h2 class="contacts__title">Техническая реализация, <br>на которую можно рассчитывать.</h2>
+                    <p class="contacts__list">Профессиональное оборудование. <br>Опытная команда. <br>Контроль каждого этапа проекта.</p>
+                    <p class="contacts__directions">Звук • Свет • Сцена • LED • Видео трансляции</p>
                 </div>
-                <img class="contacts__logo" src="img/logo_main_menu.svg" alt="Triton" loading="lazy">
-                <h2 class="contacts__title">Техническая реализация, <br>на которую можно рассчитывать.</h2>
-                <p class="contacts__list">Профессиональное оборудование. <br>Опытная команда. <br>Контроль каждого этапа проекта.</p>
-                <p class="contacts__directions">Звук • Свет • Сцена • LED • Видео трансляции</p>
+                <div class="contacts__card">
+                    <h3 class="contacts__card-title">Связаться с нами</h3>
+                    <p class="contacts__card-text">Расскажите о мероприятии — подберём оборудование и посчитаем смету.</p>
+                    <a class="contacts__phone" href="tel:+79003662120">+7 900 366 21 20</a>
+                    <a class="contacts__email" href="mailto:32tritona@gmail.com">32tritona@gmail.com</a>
+                    <div class="contacts__actions">
+                        <a class="contacts__btn contacts__btn--primary" href="tel:+79003662120">Позвонить</a>
+                        <a class="contacts__btn" href="mailto:32tritona@gmail.com">Написать</a>
+                    </div>
+                </div>
             </div>
         </section>
     </main>
