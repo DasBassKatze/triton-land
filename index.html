@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header class="header header--hidden" id="site-header">
+    <header class="header" id="site-header">
         <img class="header__logo" src="img/logo_main_menu.svg" alt="Triton">
 
         <button
@@ -26,21 +26,72 @@
 
         <nav class="header__menu" id="main-menu">
             <a class="header__menu-item" href="#why">Почему мы</a>
-            <a class="header__menu-item" href="#directions">Направления</a>
-            <a class="header__menu-item" href="#process">Процесс</a>
-            <a class="header__menu-item" href="#projects">Проекты</a>
-            <a class="header__menu-item" href="#about">О компании</a>
+            <a class="header__menu-item" href="#process">Процесс работы</a>
+            <a class="header__menu-item" href="#trust">Нам доверяют</a>
+            <a class="header__menu-item" href="#contacts">Контакты</a>
         </nav>
     </header>
 
     <main class="page-body" id="triton">
-        <section class="hero" data-parallax-section>
+        <section class="hero" id="top" data-parallax-section>
             <div class="hero__photo" data-parallax-bg data-speed="0.35"></div>
             <div class="hero__overlay" aria-hidden="true"></div>
             <div class="hero__content">
-                <img class="hero__logo" src="img/logo_main.svg" alt="Triton">
-                <p class="hero__tagline">Технические решения без права на ошибку.</p>
-                <p class="hero__directions">Звук  •  Свет  •  Сцена  •  LED  •  Видеотрансляции</p>
+                <div class="hero__top">
+                    <div class="hero__intro">
+                        <h1 class="hero__title">
+                            <img class="hero__logo" src="img/logo_main_menu.svg" alt="Triton">
+                        </h1>
+                        <p class="hero__tagline">Аренда сценического оборудования.</p>
+                        <p class="hero__subtitle">Технические решения для событий <br>без права на ошибку.</p>
+                    </div>
+                    <div class="hero__contacts">
+                        <p class="hero__contacts-title">Связаться с нами:</p>
+                        <a class="hero__contacts-link" href="tel:+79003662120">tel. +7 900 366 21 20</a>
+                        <a class="hero__contacts-link" href="mailto:32tritona@gmail.com">email: 32tritona@gmail.com</a>
+                    </div>
+                </div>
+
+                <div class="hero__directions">
+                    <h2 class="hero__directions-title">Один технический партнер. Все ключевые направления.</h2>
+                    <ul class="directions">
+                        <li class="directions__item">
+                            <div class="directions__card">
+                                <img class="directions__img" src="img/directions/sound.webp" alt="" decoding="async">
+                                <span class="directions__name">SOUND</span>
+                            </div>
+                            <p class="directions__caption">Профессиональный <br>звук</p>
+                        </li>
+                        <li class="directions__item">
+                            <div class="directions__card">
+                                <img class="directions__img" src="img/directions/light.webp" alt="" decoding="async">
+                                <span class="directions__name">LIGHT</span>
+                            </div>
+                            <p class="directions__caption">Световое <br>оборудование</p>
+                        </li>
+                        <li class="directions__item">
+                            <div class="directions__card">
+                                <img class="directions__img" src="img/directions/stage.webp" alt="" decoding="async">
+                                <span class="directions__name">STAGE</span>
+                            </div>
+                            <p class="directions__caption">Сценические <br>конструкции</p>
+                        </li>
+                        <li class="directions__item">
+                            <div class="directions__card">
+                                <img class="directions__img" src="img/directions/led.webp" alt="" decoding="async">
+                                <span class="directions__name">LED</span>
+                            </div>
+                            <p class="directions__caption">LED-экраны</p>
+                        </li>
+                        <li class="directions__item">
+                            <div class="directions__card">
+                                <img class="directions__img" src="img/directions/video.webp" alt="" decoding="async">
+                                <span class="directions__name">VIDEO</span>
+                            </div>
+                            <p class="directions__caption">Видеооборудование <br>для трансляции</p>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </section>
 
@@ -48,82 +99,98 @@
             <div class="result__bg" data-parallax-bg data-speed="0.15"></div>
             <div class="result__content">
                 <div class="result__text">
-                    <h2 class="result__title">Мы отвечаем за технический результат</h2>
+                    <h2 class="result__title">Мы отвечаем за <br>технический результат.</h2>
                     <p class="result__body">
-                        Тритон - технический партнёр для<br>мероприятий любого масштаба и уровня сложности.
+                        Тритон - технический партнёр для <br>мероприятий любого масштаба и уровня <br>сложности.
                     </p>
                     <p class="result__description">
-                        Берем на себя техническую часть проекта - от технического <br>задания и комплектации до монтажа, сопровождения<br>и демонтажа.
+                        Берём на себя техническую часть проекта - от технического <br>задания и комплектации до монтажа, сопровождения <br>и демонтажа.
                     </p>
                     <ul class="result__features">
-                <li class="result__feature">
-                    <h3 class="result__feature-title">Оборудование</h3>
-                    <p class="result__feature-text">Профессиональная техника.</p>
-                </li>
-                <li class="result__feature">
-                    <h3 class="result__feature-title">Команда</h3>
-                    <p class="result__feature-text">Специалисты высшего уровня.</p>
-                </li>
-                <li class="result__feature">
-                    <h3 class="result__feature-title">Ответственность</h3>
-                    <p class="result__feature-text">Единый технический партнёр.</p>
-                </li>
-            </ul>
+                        <li class="result__feature">
+                            <h3 class="result__feature-title">Оборудование</h3>
+                            <p class="result__feature-text">Профессиональная <br>техника</p>
+                        </li>
+                        <li class="result__feature">
+                            <h3 class="result__feature-title">Команда</h3>
+                            <p class="result__feature-text">Специалисты <br>высшего уровня</p>
+                        </li>
+                        <li class="result__feature">
+                            <h3 class="result__feature-title">Ответственность</h3>
+                            <p class="result__feature-text">Единственный технический <br>партнер</p>
+                        </li>
+                    </ul>
                 </div>
-            <div class="result__gallery">
-            <img class="result__gallery-item" src="img/scr2-pic1.webp" alt="" loading="lazy" decoding="async">
-            <img class="result__gallery-item" src="img/scr2-pic2.webp" alt="" loading="lazy" decoding="async">
-            <img class="result__gallery-item" src="img/scr2-pic3.webp" alt="" loading="lazy" decoding="async">
-            <img class="result__gallery-item" src="img/scr2-pic4.webp" alt="" loading="lazy" decoding="async">
-        </div>
+                <div class="result__gallery">
+                    <img class="result__gallery-item" src="img/scr2-pic1.webp" alt="" loading="lazy" decoding="async">
+                    <img class="result__gallery-item" src="img/scr2-pic3.webp" alt="" loading="lazy" decoding="async">
+                    <img class="result__gallery-item" src="img/scr2-pic2.webp" alt="" loading="lazy" decoding="async">
+                    <img class="result__gallery-item" src="img/scr2-pic4.webp" alt="" loading="lazy" decoding="async">
+                </div>
             </div>
         </section>
-        <section class="section section--directions" id="directions">
-    <div class="section__inner">
-        <h2 class="section__title">Направления</h2>
-        <p class="section__lead">
-            Раздел «Направления» — контент появится позже.
-        </p>
-    </div>
-</section>
 
-<section class="section section--process" id="process">
-    <div class="section__inner">
-        <h2 class="section__title">Процесс</h2>
-        <p class="section__lead">
-            Раздел «Процесс» — контент появится позже.
-        </p>
-    </div>
-</section>
+        <section class="section section--short section--process" id="process">
+            <div class="section__inner">
+                <h2 class="section__title">Мы превращаем техническую задачу <br>в работающую систему.</h2>
+                <ol class="process">
+                    <li class="process__step" style="--i: 0"><span class="process__dot"></span><span class="process__label">ТЗ</span></li>
+                    <li class="process__step" style="--i: 1"><span class="process__dot"></span><span class="process__label">Проект</span></li>
+                    <li class="process__step" style="--i: 2"><span class="process__dot"></span><span class="process__label">Комплектация</span></li>
+                    <li class="process__step" style="--i: 3"><span class="process__dot"></span><span class="process__label">Монтаж</span></li>
+                    <li class="process__step" style="--i: 4"><span class="process__dot"></span><span class="process__label">Сопровождение</span></li>
+                    <li class="process__step" style="--i: 5"><span class="process__dot"></span><span class="process__label">Демонтаж</span></li>
+                </ol>
+                <p class="section__note">От первого технического вопроса до последнего кофра.</p>
+            </div>
+        </section>
 
-<section class="section section--projects" id="projects">
-    <div class="section__inner">
-        <h2 class="section__title">Проекты</h2>
-        <p class="section__lead">
-            Раздел «Проекты» — контент появится позже.
-        </p>
-    </div>
-</section>
+        <section class="section section--short section--trust" id="trust">
+            <div class="section__inner">
+                <h2 class="section__title">Нам доверяют организаторы и компании.</h2>
+                <p class="section__lead">Работаем с event- и концертными агентствами, корпоративными заказчиками и&nbsp;организаторами масштабных мероприятий.</p>
+                <ul class="clients">
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/komnata-kultury.webp" alt="Комната культуры" loading="lazy" decoding="async"></li>
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/macan.webp" alt="MACAN" loading="lazy" decoding="async"></li>
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/kipelov.webp" alt="Кипелов" loading="lazy" decoding="async"></li>
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/arbenina.webp" alt="Диана Арбенина" loading="lazy" decoding="async"></li>
+                    <li class="clients__item"><span class="clients__logo clients__logo--text">Лолита</span></li>
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/knyazz.webp" alt="КняZz" loading="lazy" decoding="async"></li>
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/kadysheva.webp" alt="Надежда Кадышева" loading="lazy" decoding="async"></li>
+                    <li class="clients__item"><img class="clients__logo" src="img/clients/mikhailov.webp" alt="Стас Михайлов" loading="lazy" decoding="async"></li>
+                    <li class="clients__item clients__item--brand"><img class="clients__logo" src="img/clients/client-1.webp" alt="" loading="lazy" decoding="async"></li>
+                    <li class="clients__item clients__item--brand"><img class="clients__logo" src="img/clients/client-2.webp" alt="" loading="lazy" decoding="async"></li>
+                    <li class="clients__item clients__item--brand"><img class="clients__logo" src="img/clients/client-3.webp" alt="" loading="lazy" decoding="async"></li>
+                </ul>
+                <p class="section__note">Каждый проект — отдельная ответственность.</p>
+            </div>
+        </section>
 
-<section class="section section--about" id="about">
-    <div class="section__inner">
-        <h2 class="section__title">О компании</h2>
-        <p class="section__lead">
-            Раздел «О компании» — контент появится позже.
-        </p>
-    </div>
-</section>
+        <section class="section section--contacts" id="contacts" data-parallax-section>
+            <div class="contacts__bg" data-parallax-bg data-speed="0.15"></div>
+            <div class="section__inner contacts">
+                <div class="contacts__links">
+                    <a class="contacts__link" href="tel:+79003662120">+7 900 366 21 20</a>
+                    <a class="contacts__link" href="mailto:32tritona@gmail.com">32tritona@gmail.com</a>
+                </div>
+                <img class="contacts__logo" src="img/logo_main_menu.svg" alt="Triton" loading="lazy">
+                <h2 class="contacts__title">Техническая реализация, <br>на которую можно рассчитывать.</h2>
+                <p class="contacts__list">Профессиональное оборудование. <br>Опытная команда. <br>Контроль каждого этапа проекта.</p>
+                <p class="contacts__directions">Звук • Свет • Сцена • LED • Видео трансляции</p>
+            </div>
+        </section>
     </main>
-<button class="scroll-top" id="scroll-top" type="button" aria-label="Наверх">
-        <img
-            class="scroll-top__icon"
-            src="img/logo_round.svg"
-            alt=""
-            aria-hidden="true"
-        >
-        <span class="scroll-top__label">наверх</span>
-</button>
-   <!--<footer class="footer"></footer>--> 
+
+    <footer class="footer" id="site-footer">
+        <button class="footer__top" id="scroll-top" type="button">В начало</button>
+        <img class="footer__logo" src="img/logo_round.svg" alt="" aria-hidden="true">
+        <a class="footer__cta" href="#contacts">Связаться <br>с нами</a>
+        <div class="footer__contacts">
+            <p class="footer__contacts-title">Наши контакты:</p>
+            <a class="footer__contacts-link" href="tel:+79003662120">tel. +7 900 366 21 20</a>
+            <a class="footer__contacts-link" href="mailto:32tritona@gmail.com">email: 32tritona@gmail.com</a>
+        </div>
+    </footer>
 
     <script src="script.js" defer></script>
 </body>

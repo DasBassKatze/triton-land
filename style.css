@@ -22,6 +22,16 @@
    2. База
    ============================================================ */
 
+:root {
+    /* Единица макета: 1px на макете 1920×1080.
+       Ограничена и шириной, и высотой — чтобы первые экраны
+       на невысоких мониторах масштабировались целиком. */
+    --u: min(calc(100vw / 1920), calc(100vh / 1080));
+    --orange: #f05222;
+    --header-h: 60px;
+    --footer-h: 130px;
+}
+
 *,
 *::before,
 *::after {
@@ -46,15 +56,6 @@ body {
     background: #000;
 }
 
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    background: #000 url("img/background.svg") center / cover no-repeat;
-    opacity: 0.55;
-}
-
 /* ============================================================
    3. Header
    ============================================================ */
@@ -76,18 +77,6 @@ body::before {
     transform: translate3d(0, 0, 0);
     transition: transform 0.4s ease, opacity 0.4s ease;
     will-change: transform;
-}
-
-.header--hidden {
-    transform: translate3d(0, -100%, 0);
-    opacity: 0;
-    pointer-events: none;
-}
-
-.no-js .header--hidden {
-    transform: none;
-    opacity: 1;
-    pointer-events: auto;
 }
 
 .header__logo {
@@ -245,36 +234,147 @@ body::before {
     z-index: 1;
     display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 180px 24px 80px;
+    justify-content: space-between;
+    gap: calc(60 * var(--u));
+    min-height: 100dvh;
+    padding: calc(175 * var(--u)) calc(115 * var(--u)) calc(105 * var(--u));
+    font-family: "Averta CY Light", sans-serif;
+    font-weight: 300;
+}
+
+/* Верх: логотип с подписями слева, контакты справа */
+.hero__top {
+    display: grid;
+    grid-template-columns: calc(950 * var(--u)) minmax(0, 1fr);
+    align-items: start;
+}
+
+.hero__intro {
+    margin-left: calc(-12 * var(--u));
+}
+
+.hero__title {
+    margin: 0;
+    line-height: 0;
 }
 
 .hero__logo {
     display: block;
-    width: 55%;
+    width: calc(692 * var(--u));
     max-width: 100%;
     height: auto;
 }
 
 .hero__tagline {
-    margin: 90px 0 0;
-    color: #fff;
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 45px;
-    font-weight: 300;
+    margin: calc(34 * var(--u)) 0 0;
+    font-size: calc(42 * var(--u));
     line-height: 1.2;
-    text-align: center;
 }
 
-.hero__directions {
-    margin: 170px 0 0;
-    color: #f05222;
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 35px;
+.hero__subtitle {
+    margin: calc(18 * var(--u)) 0 0;
+    font-size: calc(30 * var(--u));
+    line-height: 1.2;
+}
+
+.hero__contacts {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding-top: calc(4 * var(--u));
+    font-size: calc(36 * var(--u));
+    line-height: 1.25;
+}
+
+.hero__contacts-title {
+    margin: 0 0 calc(38 * var(--u));
+}
+
+.hero__contacts-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.hero__contacts-link:hover,
+.hero__contacts-link:focus-visible {
+    color: var(--orange);
+}
+
+/* Низ: «Все ключевые направления» */
+.hero__directions-title {
+    margin: 0 0 calc(38 * var(--u));
+    font-size: calc(36 * var(--u));
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.directions {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    column-gap: calc(88 * var(--u));
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.directions__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.directions__card {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 270 / 203;
+    overflow: hidden;
+    background: #555;
+}
+
+.directions__img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Серая вуаль поверх фото, как на макете */
+.directions__card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(128, 128, 128, 0.72);
+    transition: background-color 0.35s ease;
+}
+
+.directions__name {
+    position: relative;
+    z-index: 1;
+    color: var(--orange);
+    font-size: calc(36 * var(--u));
     line-height: 1;
+    text-shadow: none;
+}
+
+.directions__item:hover .directions__card::after {
+    background-color: rgba(60, 60, 60, 0.55);
+}
+
+.directions__item:hover .directions__img {
+    transform: scale(1.06);
+}
+
+.directions__caption {
+    margin: calc(18 * var(--u)) 0 0;
+    font-size: max(13px, calc(24 * var(--u)));
+    line-height: 1.25;
     text-align: center;
-    letter-spacing: 0.1em;
-    word-spacing: 0.1em;
 }
 
 /* ============================================================
@@ -336,56 +436,55 @@ body::before {
     position: relative;
     z-index: 2;                       /* выше моста */
     width: 100%;
-    min-height: 100vh;
-    display: flex;
-    align-items: flex-start;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 60px;
+    /* снизу — место под закреплённый футер */
+    padding:
+        calc(40 * var(--u))
+        calc(90 * var(--u))
+        calc(var(--footer-h) + 40 * var(--u))
+        calc(52 * var(--u));
+    align-items: center;
 }
 
 .result__text {
     display: flex;
     flex-direction: column;
-    max-width: none;      /* было 45% — теперь ширина задаётся колонкой */
-    padding: 0;           /* было 80px 0 0 80px — padding перенесён на .result__content */
+    font-family: "Averta CY Light", sans-serif;
+    font-weight: 300;
 }
 
 .result__title {
-    max-width: none;
     margin: 0;
-    padding: 0;
     color: #fff;
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 72px;
+    font-size: calc(73 * var(--u));
     font-weight: 300;
     line-height: 1.2;
 }
 
-.result__description {
-    margin: 32px 0 0;
-    color: rgba(255, 255, 255, 0.85);
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 20px;
-    font-weight: 300;
-    line-height: 1.5;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-}
 .result__body {
-    margin: 40px 0 0;        
-    color: rgba(255, 255, 255, 0.85);
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 32px;
-    font-weight: 300;
-    line-height: 1.5;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    margin: calc(46 * var(--u)) 0 0;
+    color: #fff;
+    font-size: calc(40 * var(--u));
+    line-height: 1.2;
 }
-.result__features {
-    list-style: none;              /* убираем маркеры списка */
-    margin: 90px 0 0;              /* отступ от описания до колонок */
-    padding: 0;
 
+.result__description {
+    margin: calc(30 * var(--u)) 0 0;
+    color: #fff;
+    font-size: calc(28 * var(--u));
+    line-height: 1.3;
+}
+
+.result__features {
+    list-style: none;
+    margin: calc(123 * var(--u)) 0 0;
+    padding: 0;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
-    width: 100%;
+    grid-template-columns: calc(332 * var(--u)) calc(232 * var(--u)) max-content;
+    column-gap: 0;
 }
 
 .result__feature {
@@ -395,52 +494,33 @@ body::before {
 
 .result__feature-title {
     margin: 0;
-    color: #f05222;
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 22px;
-    font-weight: 400;
+    color: var(--orange);
+    font-size: calc(30 * var(--u));
+    font-weight: 300;
     line-height: 1.2;
-    letter-spacing: 0.06em;
     text-transform: uppercase;
 }
 
 .result__feature-text {
-    margin: 12px 0 0;
+    margin: calc(18 * var(--u)) 0 0;
     color: #fff;
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 18px;
-    font-weight: 300;
-    line-height: 1.4;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-}
-.result__content {
-    position: relative;
-    z-index: 2;
-    width: 100%;
-    min-height: 100dvh;
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 60px;
-    padding: 100px 80px 80px;
-    align-items: center;
-    box-sizing: border-box;
+    font-size: calc(25 * var(--u));
+    line-height: 1.25;
 }
 
 .result__gallery {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 18px;
-    width: 100%;
-    max-width: 620px;
-    justify-self: end;    /* прижимаем к правому краю колонки */
+    gap: calc(47 * var(--u));
+    width: calc(797 * var(--u));
 }
 
 .result__gallery-item {
     display: block;
     width: 100%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 375 / 281;
     object-fit: cover;
-    border-radius: 10px;
+    border-radius: calc(18 * var(--u));
 
     /* Тень: две ступени — глубокая для объёма + мягкая для рассеивания */
     box-shadow:
@@ -451,10 +531,14 @@ body::before {
     outline: 1px solid rgba(255, 255, 255, 0.06);
     outline-offset: -1px;
 }
+
 /* ============================================================
    7. Универсальные секции (.section)
    ============================================================ */
 
+/* Фон с точками лежит на самих секциях, поэтому листается
+   вместе с ними, а не стоит на месте. Сверху и снизу он
+   уходит в чёрный — так стыки между секциями не видны. */
 .section {
     position: relative;
     width: 100%;
@@ -465,34 +549,31 @@ body::before {
 
     display: flex;
     align-items: center;
-    padding: 120px 80px;
+    padding: calc(var(--header-h) + 40px) 80px 60px;
     box-sizing: border-box;
+    font-family: "Averta CY Light", sans-serif;
+    font-weight: 300;
+
+    background:
+        linear-gradient(
+            to bottom,
+            #000 0%,
+            rgba(0, 0, 0, 0.45) 22%,
+            rgba(0, 0, 0, 0.45) 78%,
+            #000 100%
+        ),
+        #000 url("img/background.svg") center / cover no-repeat;
 }
 
-/* Мост: растворяет стык с предыдущей секцией.
-   Работает как .result::before — растёт вверх от .section
-   на 120px и переходит из прозрачного в чёрный. */
-.section::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: -120px;
-    height: 120px;
-    pointer-events: none;
-    z-index: 1;
-    background: linear-gradient(
-        to bottom,
-        transparent 0%,
-        rgba(0, 0, 0, 0.95) 60%,
-        #000 100%
-    );
+/* «Процесс работы» и «Нам доверяют» — примерно 60% экрана */
+.section--short {
+    min-height: 60dvh;
 }
 
 .section__inner {
     position: relative;
     z-index: 2;
-    max-width: 1280px;
+    max-width: 1600px;
     width: 100%;
     margin: 0 auto;
 }
@@ -500,29 +581,390 @@ body::before {
 .section__title {
     margin: 0;
     color: #fff;
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 72px;
+    font-size: max(32px, calc(60 * var(--u)));
     font-weight: 300;
     line-height: 1.2;
 }
 
 .section__lead {
-    margin: 32px 0 0;
-    max-width: 720px;
-    color: rgba(255, 255, 255, 0.75);
-    font-family: "Averta CY Light", sans-serif;
-    font-size: 28px;
-    font-weight: 300;
-    line-height: 1.5;
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    margin: calc(28 * var(--u)) 0 0;
+    max-width: 1100px;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: max(17px, calc(28 * var(--u)));
+    line-height: 1.4;
 }
+
+.section__note {
+    margin: calc(60 * var(--u)) 0 0;
+    color: rgba(255, 255, 255, 0.75);
+    font-size: max(17px, calc(32 * var(--u)));
+    line-height: 1.3;
+    text-align: center;
+}
+
+/* --- Процесс работы: линия с точками --- */
+.process {
+    --dot: max(22px, calc(36 * var(--u)));
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    margin: calc(90 * var(--u)) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+/* Линия: от центра первой точки, со стрелкой на конце */
+.process::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--dot) / 2 - 1.5px);
+    left: calc(100% / 12);
+    right: calc(100% / 12 - 48px);
+    height: 3px;
+    background: var(--orange);
+    transform-origin: left center;
+}
+
+.process::after {
+    content: "";
+    position: absolute;
+    top: calc(var(--dot) / 2);
+    right: calc(100% / 12 - 50px);
+    width: 14px;
+    height: 14px;
+    border-top: 3px solid var(--orange);
+    border-right: 3px solid var(--orange);
+    transform: translateY(-50%) rotate(45deg);
+}
+
+.process__step {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.process__dot {
+    display: block;
+    width: var(--dot);
+    height: var(--dot);
+    border-radius: 50%;
+    background: #a50f0b;
+    box-shadow:
+        0 0 0 3px #000,
+        0 0 0 5px rgba(240, 82, 34, 0.6);
+}
+
+.process__label {
+    margin-top: calc(40 * var(--u));
+    font-size: max(14px, calc(26 * var(--u)));
+    line-height: 1.2;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+/* Анимация: JS вешает --armed, а при появлении секции — --in */
+.process--armed::before,
+.process--armed::after {
+    transition:
+        transform 1.4s cubic-bezier(0.65, 0, 0.35, 1),
+        opacity 0.4s ease 1.2s;
+}
+.process--armed::before { transform: scaleX(0); }
+.process--armed::after  { opacity: 0; }
+
+.process--armed .process__dot,
+.process--armed .process__label {
+    opacity: 0;
+    transition:
+        opacity 0.6s ease,
+        transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition-delay: calc(var(--i) * 0.22s);
+}
+.process--armed .process__dot   { transform: scale(0.2); }
+.process--armed .process__label { transform: translateY(16px); }
+
+.process--armed.process--in::before { transform: scaleX(1); }
+.process--armed.process--in::after  { opacity: 1; }
+.process--armed.process--in .process__dot,
+.process--armed.process--in .process__label {
+    opacity: 1;
+    transform: none;
+}
+
+/* --- Нам доверяют: логотипы --- */
+.clients {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    row-gap: calc(40 * var(--u));
+    margin: calc(60 * var(--u)) 0 0;
+    padding: 0;
+    list-style: none;
+}
+
+.clients__item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 calc(100% / 6);
+    height: max(70px, calc(120 * var(--u)));
+    padding: 0 calc(20 * var(--u));
+}
+
+.clients__logo {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.clients__item--brand .clients__logo {
+    max-height: 85%;
+}
+
+.clients__logo--text {
+    color: #c9c3c3;
+    font-family: Georgia, "Times New Roman", serif;
+    font-size: max(24px, calc(48 * var(--u)));
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+}
+
+.clients__item:hover .clients__logo {
+    transform: scale(1.06);
+}
+
+/* --- Контакты --- */
+.section--contacts {
+    overflow: hidden;
+    align-items: stretch;
+    /* снизу — футер и висящая над ним кнопка «В начало» */
+    padding-bottom: calc(var(--footer-h) + 110px);
+    background: #000;
+}
+
+/* Фото + точки поверх. Точки на чёрном, поэтому смешиваем
+   через screen — чёрный становится прозрачным. */
+.contacts__bg {
+    position: absolute;
+    inset: -20% 0 0 0;
+    z-index: 0;
+    background:
+        url("img/background.svg") center / cover no-repeat,
+        url("img/bg-contacts.webp") center / cover no-repeat;
+    background-blend-mode: screen, normal;
+    will-change: transform;
+    backface-visibility: hidden;
+}
+
+.contacts__bg::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    /* слой выше секции на 20% (запас под параллакс),
+       поэтому чёрный тянется до верхней границы секции */
+    background: linear-gradient(
+        to bottom,
+        #000 0%,
+        #000 16%,
+        rgba(0, 0, 0, 0.35) 40%,
+        rgba(0, 0, 0, 0.35) 75%,
+        rgba(0, 0, 0, 0.8) 100%
+    );
+}
+
+.contacts {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.contacts__links {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: calc(10 * var(--u));
+}
+
+.contacts__link {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: max(16px, calc(34 * var(--u)));
+    line-height: 1.3;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.contacts__link:hover,
+.contacts__link:focus-visible {
+    color: var(--orange);
+}
+
+.contacts__logo {
+    display: block;
+    width: calc(1000 * var(--u));
+    max-width: 100%;
+    height: auto;
+    margin-top: calc(40 * var(--u));
+}
+
+.contacts__title {
+    margin: calc(70 * var(--u)) 0 0;
+    font-size: max(26px, calc(64 * var(--u)));
+    font-weight: 300;
+    line-height: 1.15;
+}
+
+.contacts__list {
+    margin: calc(50 * var(--u)) 0 0;
+    font-size: max(18px, calc(40 * var(--u)));
+    line-height: 1.35;
+}
+
+.contacts__directions {
+    margin: calc(70 * var(--u)) 0 0;
+    color: var(--orange);
+    font-size: max(16px, calc(44 * var(--u)));
+    line-height: 1.2;
+    text-align: right;
+}
+
 /* ============================================================
    8. Footer
+   Закреплён снизу, появляется со второй секции
    ============================================================ */
 
 .footer {
-    min-height: 60px;
-    background: rgba(0, 0, 0, 0.55);
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    height: var(--footer-h);
+    padding: 0 60px 0 43px;
+    border-top: 3px solid rgba(255, 255, 255, 0.45);
+    background: rgba(0, 0, 0, 0.72);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 -1px 18px rgba(255, 255, 255, 0.08);
+    font-family: "Averta CY Light", sans-serif;
+    font-weight: 300;
+
+    transform: translate3d(0, 100%, 0);
+    visibility: hidden;
+    transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0s linear 0.5s;
+}
+
+.footer--visible {
+    transform: translate3d(0, 0, 0);
+    visibility: visible;
+    transition:
+        transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+        visibility 0s;
+}
+
+.no-js .footer {
+    transform: none;
+    visibility: visible;
+}
+
+.footer__logo {
+    display: block;
+    flex: none;
+    width: 88px;
+    height: 88px;
+}
+
+/* Общий вид кнопок футера: тонкая светлая рамка */
+.footer__cta,
+.footer__top {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    background: transparent;
+    color: #fff;
+    font-family: inherit;
+    font-weight: 300;
+    text-align: center;
+    text-decoration: none;
+    text-shadow: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.footer__cta:hover,
+.footer__cta:focus-visible,
+.footer__top:hover,
+.footer__top:focus-visible {
+    color: var(--orange);
+    border-color: var(--orange);
+    background-color: rgba(240, 82, 34, 0.08);
+}
+
+.footer__cta:active,
+.footer__top:active {
+    transform: scale(0.97);
+}
+
+.footer__cta {
+    width: 200px;
+    height: 82px;
+    font-size: 25px;
+    line-height: 1.2;
+}
+
+/* «В начало» висит над футером справа */
+.footer__top {
+    position: absolute;
+    right: 60px;
+    bottom: calc(100% + 24px);
+    width: 200px;
+    height: 68px;
+    padding: 0;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 30px;
+    line-height: 1;
+}
+
+.footer__contacts {
+    display: flex;
+    flex-direction: column;
+    font-size: 25px;
+    line-height: 1.2;
+}
+
+.footer__contacts-title {
+    margin: 0;
+}
+
+.footer__contacts-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.25s ease;
+}
+
+.footer__contacts-link:hover,
+.footer__contacts-link:focus-visible {
+    color: var(--orange);
 }
 
 /* ============================================================
@@ -530,26 +972,9 @@ body::before {
    ============================================================ */
 
 @media (max-width: 1279px) {
-    .hero__tagline    { font-size: 38px; }
-    .hero__directions { font-size: 30px; }
-    .result__title    { font-size: 42px; }
-    .result__text        { max-width: 55%; padding: 60px 0 0 60px; }
-    .result__description { font-size: 20px; margin-top: 28px; }
-    .result__features {
-        margin-top: 70px;
-        gap: 24px;
-    }
-    .result__feature-title { font-size: 20px; }
-    .result__feature-text  { font-size: 16px; }
-    .result__content {
-        gap: 40px;
-        padding: 80px 60px 60px;
-    }
-    .result__gallery      { gap: 14px; max-width: 520px; }
-    .result__gallery-item { border-radius: 9px; }
-    .section              { padding: 100px 60px; }
-    .section__title       { font-size: 56px; }
-    .section__lead        { font-size: 24px; }
+    .result__content { gap: 40px; }
+    .section         { padding-left: 60px; padding-right: 60px; }
+    .footer          { gap: 28px; padding-left: 32px; }
 }
 
 /* Планшет: меню сжимается, но остаётся горизонтальным */
@@ -558,31 +983,69 @@ body::before {
     .header__menu-item:not(:last-child) { margin-right: 40px; }
     .header__menu-item:not(:last-child)::after { right: -22px; width: 6px; height: 6px; }
 
-    .result__text        { max-width: 65%; padding: 50px 0 0 40px; }
-    .result__description { font-size: 18px; }
-    .result__features {
-        margin-top: 50px;
-        gap: 20px;
+    .hero__content {
+        padding: 110px 40px 60px;
+        gap: 48px;
     }
-    .result__feature-title { font-size: 18px; }
-    .result__feature-text  { font-size: 15px; }
-        .result__content {
+    .hero__top {
+        grid-template-columns: 1fr;
+        gap: 36px;
+    }
+    .hero__intro         { margin-left: 0; }
+    .hero__logo          { width: 70%; }
+    .hero__tagline       { margin-top: 24px; font-size: 30px; }
+    .hero__subtitle      { margin-top: 12px; font-size: 22px; }
+    .hero__contacts      { font-size: 22px; padding-top: 0; }
+    .hero__contacts-title { margin-bottom: 10px; }
+    .hero__directions-title { font-size: 24px; margin-bottom: 24px; }
+    .directions {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 24px;
+    }
+    .directions__name    { font-size: 26px; }
+    .directions__caption { font-size: 16px; margin-top: 10px; }
+
+    .result__content {
         grid-template-columns: 1fr;
         gap: 40px;
-        padding: 70px 40px 60px;
+        padding: 100px 40px calc(var(--footer-h) + 40px);
         align-items: start;
     }
-    .result__gallery {
-        max-width: 100%;
-        justify-self: stretch;
+    .result__title       { font-size: 44px; }
+    .result__body        { font-size: 26px; margin-top: 28px; }
+    .result__description { font-size: 18px; margin-top: 20px; }
+    .result__features {
+        grid-template-columns: repeat(3, auto);
+        justify-content: start;
+        margin-top: 44px;
+        column-gap: 32px;
     }
-    .section              { padding: 80px 40px; }
-    .section__title       { font-size: 44px; }
-    .section__lead        { font-size: 20px; }
+    .result__feature-title { font-size: 20px; }
+    .result__feature-text  { font-size: 16px; margin: 10px 0 0; }
+    .result__gallery {
+        width: 100%;
+        gap: 16px;
+    }
+    .result__gallery-item { border-radius: 10px; }
+
+    .section { padding-left: 40px; padding-right: 40px; }
+    .process__label { font-size: 13px; letter-spacing: 0.02em; }
+    .clients__item  { flex-basis: 25%; }
+    .contacts__logo { width: 80%; }
+
+    .footer       { gap: 20px; }
+    .footer__logo { width: 64px; height: 64px; }
+    .footer__cta  { width: 170px; height: 70px; font-size: 21px; }
+    .footer__contacts { font-size: 19px; }
+    .footer__top  { width: 160px; height: 56px; font-size: 24px; right: 40px; }
 }
 
 /* Мобильный: бургер + выпадающее меню */
 @media (max-width: 767px) {
+    :root {
+        --footer-h: 84px;
+    }
+
     .header__burger {
         display: block;
     }
@@ -642,50 +1105,138 @@ body::before {
 
     /* Параллакс отключён */
     .hero__photo,
-    .result__bg {
+    .result__bg,
+    .contacts__bg {
         inset: 0;
         will-change: auto;
     }
 
-    .hero__content    { padding-top: 120px; }
-    .hero__tagline    { margin-top: 50px; font-size: 26px; }
-    .hero__directions { margin-top: 80px; font-size: 18px; }
+    .hero__content    { padding: 96px 20px 48px; gap: 40px; }
+    .hero__logo       { width: 100%; }
+    .hero__tagline    { font-size: 22px; margin-top: 18px; }
+    .hero__subtitle   { font-size: 17px; }
+    .hero__contacts   { font-size: 17px; }
+    .hero__directions-title { font-size: 20px; }
+    .directions {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 20px 14px;
+    }
+    /* Пятая карточка — по центру */
+    .directions__item:last-child {
+        grid-column: 1 / -1;
+        width: calc(50% - 7px);
+        justify-self: center;
+    }
+    .directions__name    { font-size: 22px; }
+    .directions__caption { font-size: 14px; }
 
-    .result__text {
-        max-width: 100%;
-        padding: 60px 24px 0;
-    }
-    .result__title       { font-size: 28px; }
-    .result__description { font-size: 16px; margin-top: 20px; }
-    .result__features {
-        grid-template-columns: 1fr;
-        margin-top: 40px;
-        gap: 24px;
-    }
-    .result__feature-title { font-size: 16px; }
-    .result__feature-text  { font-size: 14px; }
-        .result__content {
+    .result__content {
         min-height: auto;
-        padding: 60px 24px 40px;
+        padding: 90px 20px calc(var(--footer-h) + 32px);
         gap: 32px;
     }
+    .result__title       { font-size: 30px; }
+    .result__body        { font-size: 20px; margin-top: 20px; }
+    .result__description { font-size: 16px; }
+    .result__features {
+        grid-template-columns: 1fr;
+        margin-top: 32px;
+        gap: 20px;
+    }
+    .result__feature-title { font-size: 17px; }
+    .result__feature-text  { font-size: 15px; margin-top: 6px; }
     .result__gallery      { gap: 12px; }
     .result__gallery-item { border-radius: 8px; }
+    /* На узком экране ручные переносы только мешают */
+    .result__body br,
+    .result__description br { display: none; }
+
     .section {
-        padding: 80px 24px;
+        min-height: auto;
+        padding: 100px 20px 64px;
+    }
+    .section__title br { display: none; }
+
+    /* Линия процесса становится вертикальной, стрелка — вниз */
+    .process {
+        --dot: 22px;
+        grid-template-columns: 1fr;
+        row-gap: 26px;
+        margin-top: 36px;
+    }
+    .process::before {
+        top: calc(var(--dot) / 2);
+        bottom: -30px;
+        left: calc(var(--dot) / 2 - 1.5px);
+        right: auto;
+        width: 3px;
+        height: auto;
+        transform-origin: center top;
+    }
+    .process::after {
+        top: auto;
+        bottom: -32px;
+        left: calc(var(--dot) / 2);
+        right: auto;
+        transform: translateX(-50%) rotate(135deg);
+    }
+    .process--armed::before { transform: scaleY(0); }
+    .process--armed.process--in::before { transform: scaleY(1); }
+    .process__step {
+        flex-direction: row;
+        gap: 18px;
+        text-align: left;
+    }
+    .process__label {
+        margin-top: 0;
+        font-size: 16px;
+    }
+    .process--armed .process__label { transform: translateX(-12px); }
+    .section--process .section__note { margin-top: 56px; }
+
+    .clients {
+        row-gap: 20px;
+        margin-top: 32px;
+    }
+    .clients__item {
+        flex-basis: 50%;
+        height: 64px;
+        padding: 0 12px;
+    }
+
+    .section--contacts {
+        padding-bottom: calc(var(--footer-h) + 40px);
+    }
+    .contacts__links {
+        position: static;
         align-items: flex-start;
-        padding-top: 140px;       /* чтобы контент не прилипал к хедеру */
+        order: 10;
+        margin-top: 32px;
     }
-    .section__title       { font-size: 32px; }
-    .section__lead        { font-size: 18px; margin-top: 20px; }
-    .scroll-top {
-        visibility: hidden;
-        pointer-events: none;
-        opacity: 0;
+    .contacts__logo       { width: 100%; margin-top: 0; }
+    .contacts__title      { margin-top: 32px; }
+    .contacts__list       { margin-top: 24px; }
+    .contacts__directions { margin-top: 32px; text-align: left; }
+
+    /* Компактный футер: логотип, две кнопки */
+    .footer {
+        gap: 12px;
+        padding: 0 16px;
     }
-    .scroll-top__icon {
-        width: 64px;
+    .footer__logo     { width: 48px; height: 48px; }
+    .footer__contacts { display: none; }
+    .footer__cta,
+    .footer__top {
+        position: static;
+        flex: 1 1 0;
+        width: auto;
+        height: 48px;
+        font-size: 17px;
+        background: transparent;
     }
+    .footer__cta br { display: none; }
+    .footer__top { order: 3; }
+
     .page-body {
         scroll-snap-type: none;
         scroll-behavior: auto;
@@ -701,100 +1252,13 @@ body::before {
 @media (max-width: 479px) {
     .header__logo       { width: 40%; margin-left: 16px; }
     .hero__tagline      { font-size: 20px; }
-    .hero__directions   { font-size: 14px; letter-spacing: 0.05em; }
-    .result__title      { font-size: 22px; }
-    .result__text       { padding: 40px 20px 0; }
-    .result__description { font-size: 15px; }
-    .result__features {
-        margin-top: 32px;
-        gap: 20px;
-    }
-    .result__feature-title { font-size: 14px; }
-    .result__feature-text  { font-size: 13px; }
-    .result__content {
-        padding: 40px 20px 32px;
-        gap: 24px;
-    }
-    .result__gallery      { gap: 10px; }
-    .result__gallery-item { border-radius: 6px; }
-    .section              { padding: 60px 20px; padding-top: 120px; }
-    .section__title       { font-size: 26px; }
-    .section__lead        { font-size: 15px; }
-    .scroll-top {
-        visibility: hidden;
-        pointer-events: none;
-        opacity: 0;
-    }
+    .result__title      { font-size: 26px; }
+    .section__title     { font-size: 26px; }
+    .contacts__title    { font-size: 24px; }
+    .footer__cta,
+    .footer__top        { font-size: 15px; }
 }
 
-/* ============================================================
-   12. Кнопка «Наверх»
-   ============================================================ */
-
-.scroll-top {
-    position: fixed;
-    right: 32px;
-    bottom: 32px;
-    z-index: 999;
-
-    /* ДЕСКТОП: иконка справа, надпись слева.
-       row-reverse — потому что в HTML иконка идёт первой. */
-    display: inline-flex;
-    flex-direction: row-reverse;
-    align-items: center;
-    gap: 12px;
-
-    background: transparent;
-    border: none;
-    padding: 0;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-
-    color: #f05222;
-    font-family: "Averta CY Bold", sans-serif;
-    font-size: 30px;
-    font-weight: 300;
-    line-height: 1;
-
-    opacity: 0;
-    transform: translateY(24px);
-    pointer-events: none;
-    transition:
-        opacity 0.45s ease,
-        transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: transform, opacity;
-}
-
-.scroll-top--visible {
-    opacity: 1;
-    transform: translateY(0);
-    pointer-events: auto;
-}
-
-.scroll-top__icon {
-    display: block;
-    width: 80px;                /* ← размер можно менять здесь */
-    height: auto;
-    filter:
-        drop-shadow(0 10px 22px rgba(0, 0, 0, 0.6))
-        drop-shadow(0 3px 8px rgba(0, 0, 0, 0.4));
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Лёгкий подъём иконки при наведении */
-.scroll-top:hover .scroll-top__icon,
-.scroll-top:focus-visible .scroll-top__icon {
-    transform: translateY(-3px) scale(1.04);
-}
-
-.scroll-top:active .scroll-top__icon {
-    transform: translateY(0) scale(0.98);
-}
-
-.scroll-top__label {
-    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
-    letter-spacing: 0.02em;
-}
 /* ============================================================
    10. Reduced motion
    ============================================================ */
@@ -806,7 +1270,8 @@ body::before {
     }
 
     .hero__photo,
-    .result__bg {
+    .result__bg,
+    .contacts__bg {
         transform: none !important;
         will-change: auto;
     }
@@ -817,10 +1282,10 @@ body::before {
     .header {
         transition: none;
     }
-    .scroll-top {
-        transition: none;
-    }
-    .scroll-top__icon {
+    .footer,
+    .footer__cta,
+    .footer__top,
+    .directions__img {
         transition: none;
     }
 }

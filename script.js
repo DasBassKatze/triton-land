@@ -148,67 +148,7 @@
 
 
 /* ============================================================
-   2. Header: скрыт в hero, показан во всех секциях после него
-   Один-единственный observer. Наблюдаем за .hero.
-   ============================================================ */
-
-(function () {
-    'use strict';
-
-    var header   = document.getElementById('site-header');
-    var hero     = document.querySelector('.hero');
-    var pageBody = document.querySelector('.page-body');
-
-    if (!header || !hero || !pageBody) {
-        if (header) header.classList.remove('header--hidden');
-        return;
-    }
-
-    // Фолбэк без IntersectionObserver
-    if (!('IntersectionObserver' in window)) {
-        header.classList.remove('header--hidden');
-        var onScroll = function () {
-            var threshold = hero.offsetHeight - 60;
-            if (pageBody.scrollTop >= threshold) {
-                header.classList.remove('header--hidden');
-            } else {
-                header.classList.add('header--hidden');
-            }
-        };
-        pageBody.addEventListener('scroll', onScroll, { passive: true });
-        onScroll();
-        return;
-    }
-
-    var observer = new IntersectionObserver(
-        function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    // hero виден → мы вверху страницы, хедер скрыт
-                    header.classList.add('header--hidden');
-                } else {
-                    // hero ушёл → мы в любой из секций ниже, хедер показан
-                    header.classList.remove('header--hidden');
-                }
-            });
-        },
-        {
-            root: pageBody,
-            // Сдвигаем нижнюю границу зоны наблюдения вверх на 10%.
-            // Если хочется, чтобы хедер выезжал ещё раньше — попробуй
-            // '-10% 0px 0px 0px' (сдвиг верхней границы вниз).
-            rootMargin: '-30% 0px 0px 0px',
-            threshold: 0
-        }
-    );
-
-    observer.observe(hero);
-
-})();
-
-
-/* ============================================================
-   3. Бургер-меню
+   2. Бургер-меню
    ============================================================ */
 
 (function () {
@@ -260,7 +200,7 @@
 
 
 /* ============================================================
-   4. Каскадное появление блоков при загрузке и скролле
+   3. Каскадное появление блоков при загрузке и скролле
    ============================================================ */
 
 (function () {
@@ -271,8 +211,10 @@
 
     var heroPlan = [
         { selector: '.hero__logo',       delay: 150 },
-        { selector: '.hero__tagline',    delay: 350 },
-        { selector: '.hero__directions', delay: 550 }
+        { selector: '.hero__tagline',    delay: 300 },
+        { selector: '.hero__subtitle',   delay: 400 },
+        { selector: '.hero__contacts',   delay: 500 },
+        { selector: '.hero__directions', delay: 650 }
     ];
 
     var resultPlan = [
@@ -361,30 +303,24 @@
 })();
 
 /* ============================================================
-   5. Кнопка «Наверх»
-   Появляется после второй секции и больше не исчезает
-   при скролле дальше
+   4. Футер и кнопка «В начало»
+   Футер выезжает на второй секции и дальше висит всегда
    ============================================================ */
 
 (function () {
     'use strict';
 
+    var footer   = document.getElementById('site-footer');
     var btn      = document.getElementById('scroll-top');
     var pageBody = document.querySelector('.page-body');
-    var trigger  = document.querySelector('.section--directions'); // порог
+    var trigger  = document.querySelector('.result'); // вторая секция
 
-    if (!btn || !pageBody || !trigger) return;
+    if (!footer || !pageBody || !trigger) return;
 
-    function show() { btn.classList.add('scroll-top--visible'); }
-    function hide() { btn.classList.remove('scroll-top--visible'); }
-
-    // Порог: показываем кнопку, когда верх третьей секции
-    // приблизился к середине экрана — то есть вторая секция
-    // уже почти пройдена.
+    // Порог: верх второй секции дошёл до середины экрана
     function update() {
         var threshold = trigger.offsetTop - pageBody.clientHeight * 0.5;
-        if (pageBody.scrollTop >= threshold) show();
-        else hide();
+        footer.classList.toggle('footer--visible', pageBody.scrollTop >= threshold);
     }
 
     pageBody.addEventListener('scroll', update, { passive: true });
@@ -401,6 +337,8 @@
     // Стартовая проверка — если страница открыта не с нуля
     update();
 
+    if (!btn) return;
+
     // Клик — плавный скролл наверх
     btn.addEventListener('click', function () {
         var prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -409,5 +347,36 @@
             behavior: prefersReduced ? 'auto' : 'smooth'
         });
     });
+
+})();
+
+
+/* ============================================================
+   5. Линия «Процесс работы»: прорисовывается при появлении
+   ============================================================ */
+
+(function () {
+    'use strict';
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var process  = document.querySelector('.process');
+    var pageBody = document.querySelector('.page-body');
+
+    if (reduceMotion || !process || !('IntersectionObserver' in window)) return;
+
+    process.classList.add('process--armed');
+
+    var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+            if (!entry.isIntersecting) return;
+            process.classList.add('process--in');
+            io.disconnect();
+        });
+    }, {
+        root: pageBody || null,
+        threshold: 0.4
+    });
+
+    io.observe(process);
 
 })();
