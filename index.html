@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="ru" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Triton Touring</title>
+    <script>document.documentElement.classList.remove('no-js');</script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="header header--hidden" id="site-header">
+        <img class="header__logo" src="img/logo_main_menu.svg" alt="Triton">
+
+        <button
+            class="header__burger"
+            id="burger"
+            type="button"
+            aria-label="Открыть меню"
+            aria-expanded="false"
+            aria-controls="main-menu"
+        >
+            <span class="header__burger-line"></span>
+            <span class="header__burger-line"></span>
+            <span class="header__burger-line"></span>
+        </button>
+
+        <nav class="header__menu" id="main-menu">
+            <a class="header__menu-item" href="#why">Почему мы</a>
+            <a class="header__menu-item" href="#directions">Направления</a>
+            <a class="header__menu-item" href="#process">Процесс</a>
+            <a class="header__menu-item" href="#projects">Проекты</a>
+            <a class="header__menu-item" href="#about">О компании</a>
+        </nav>
+    </header>
+
+    <main class="page-body" id="triton">
+        <section class="hero" data-parallax-section>
+            <div class="hero__photo" data-parallax-bg data-speed="0.35"></div>
+            <div class="hero__overlay" aria-hidden="true"></div>
+            <div class="hero__content">
+                <img class="hero__logo" src="img/logo_main.svg" alt="Triton">
+                <p class="hero__tagline">Технические решения без права на ошибку.</p>
+                <p class="hero__directions">Звук  •  Свет  •  Сцена  •  LED  •  Видеотрансляции</p>
+            </div>
+        </section>
+
+        <section class="result" id="why" data-parallax-section>
+            <div class="result__bg" data-parallax-bg data-speed="0.15"></div>
+            <div class="result__content">
+                <div class="result__text">
+                    <h2 class="result__title">Мы отвечаем за технический результат</h2>
+                    <p class="result__body">
+                        Тритон - технический партнёр для<br>мероприятий любого масштаба и уровня сложности.
+                    </p>
+                    <p class="result__description">
+                        Берем на себя техническую часть проекта - от технического <br>задания и комплектации до монтажа, сопровождения<br>и демонтажа.
+                    </p>
+                    <ul class="result__features">
+                <li class="result__feature">
+                    <h3 class="result__feature-title">Оборудование</h3>
+                    <p class="result__feature-text">Профессиональная техника.</p>
+                </li>
+                <li class="result__feature">
+                    <h3 class="result__feature-title">Команда</h3>
+                    <p class="result__feature-text">Специалисты высшего уровня.</p>
+                </li>
+                <li class="result__feature">
+                    <h3 class="result__feature-title">Ответственность</h3>
+                    <p class="result__feature-text">Единый технический партнёр.</p>
+                </li>
+            </ul>
+                </div>
+            <div class="result__gallery">
+            <img class="result__gallery-item" src="img/scr2-pic1.webp" alt="" loading="lazy" decoding="async">
+            <img class="result__gallery-item" src="img/scr2-pic2.webp" alt="" loading="lazy" decoding="async">
+            <img class="result__gallery-item" src="img/scr2-pic3.webp" alt="" loading="lazy" decoding="async">
+            <img class="result__gallery-item" src="img/scr2-pic4.webp" alt="" loading="lazy" decoding="async">
+        </div>
+            </div>
+        </section>
+        <section class="section section--directions" id="directions">
+    <div class="section__inner">
+        <h2 class="section__title">Направления</h2>
+        <p class="section__lead">
+            Раздел «Направления» — контент появится позже.
+        </p>
+    </div>
+</section>
+
+<section class="section section--process" id="process">
+    <div class="section__inner">
+        <h2 class="section__title">Процесс</h2>
+        <p class="section__lead">
+            Раздел «Процесс» — контент появится позже.
+        </p>
+    </div>
+</section>
+
+<section class="section section--projects" id="projects">
+    <div class="section__inner">
+        <h2 class="section__title">Проекты</h2>
+        <p class="section__lead">
+            Раздел «Проекты» — контент появится позже.
+        </p>
+    </div>
+</section>
+
+<section class="section section--about" id="about">
+    <div class="section__inner">
+        <h2 class="section__title">О компании</h2>
+        <p class="section__lead">
+            Раздел «О компании» — контент появится позже.
+        </p>
+    </div>
+</section>
+    </main>
+<button class="scroll-top" id="scroll-top" type="button" aria-label="Наверх">
+        <img
+            class="scroll-top__icon"
+            src="img/logo_round.svg"
+            alt=""
+            aria-hidden="true"
+        >
+        <span class="scroll-top__label">наверх</span>
+</button>
+   <!--<footer class="footer"></footer>--> 
+
+    <script src="script.js" defer></script>
+</body>
+</html>

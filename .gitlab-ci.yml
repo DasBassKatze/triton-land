@@ -1,0 +1,67 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  IMAGE_NAME: "registry.git.hatka.ru/krpld/triton-landing"
+
+build-image:
+  stage: build
+  tags:
+    - docker
+
+  script:
+    - 'echo "=== Project files ==="'
+    - 'find . -maxdepth 4 -type f -not -path "./.git/*" -print'
+
+    - 'echo "=== Preparing build directory on Docker host ==="'
+    - 'ssh deploy@192.168.94.107 "rm -rf /tmp/triton-landing && mkdir -p /tmp/triton-landing"'
+
+    - 'echo "=== Creating project archive ==="'
+    - 'tar czf /tmp/triton-landing.tar.gz --exclude=.git .'
+
+    - 'echo "=== Copying project archive to Docker host ==="'
+    - 'scp /tmp/triton-landing.tar.gz deploy@192.168.94.107:/tmp/'
+
+    - 'echo "=== Extracting project on Docker host ==="'
+    - 'ssh deploy@192.168.94.107 "tar xzf /tmp/triton-landing.tar.gz -C /tmp/triton-landing"'
+
+    - 'echo "=== Building Docker image ==="'
+    - 'ssh deploy@192.168.94.107 "docker build -t triton-landing:latest /tmp/triton-landing"'
+
+    - 'echo "=== Tagging image with commit SHA ==="'
+    - 'ssh deploy@192.168.94.107 "docker tag triton-landing:latest $IMAGE_NAME:$CI_COMMIT_SHA"'
+
+    - 'echo "=== Tagging image as latest ==="'
+    - 'ssh deploy@192.168.94.107 "docker tag triton-landing:latest $IMAGE_NAME:latest"'
+
+    - 'echo "=== Pushing SHA tag ==="'
+    - 'ssh deploy@192.168.94.107 "docker push $IMAGE_NAME:$CI_COMMIT_SHA"'
+
+    - 'echo "=== Pushing latest tag ==="'
+    - 'ssh deploy@192.168.94.107 "docker push $IMAGE_NAME:latest"'
+
+    - 'echo "=== Build and push completed ==="'
+
+deploy:
+  stage: deploy
+  tags:
+    - docker
+
+  script:
+    - 'echo "=== Preparing deployment directory ==="'
+    - 'ssh deploy@192.168.94.107 "mkdir -p /opt/triton-landing"'
+
+    - 'echo "=== Copying Compose file ==="'
+    - 'scp compose.yaml deploy@192.168.94.107:/opt/triton-landing/compose.yaml'
+
+    - 'echo "=== Pulling image $CI_COMMIT_SHA ==="'
+    - 'ssh deploy@192.168.94.107 "cd /opt/triton-landing && IMAGE_NAME=$IMAGE_NAME IMAGE_TAG=$CI_COMMIT_SHA docker compose pull"'
+
+    - 'echo "=== Starting application ==="'
+    - 'ssh deploy@192.168.94.107 "cd /opt/triton-landing && IMAGE_NAME=$IMAGE_NAME IMAGE_TAG=$CI_COMMIT_SHA docker compose up -d"'
+
+    - 'echo "=== Deployment status ==="'
+    - 'ssh deploy@192.168.94.107 "docker ps --filter name=triton-landing"'
+
+    - 'echo "=== Deployment completed ==="'

@@ -1,0 +1,7 @@
+services:
+  triton-landing:
+    image: ${IMAGE_NAME}:${IMAGE_TAG}
+    container_name: triton-landing
+    restart: unless-stopped
+    ports:
+      - "15000:80"
