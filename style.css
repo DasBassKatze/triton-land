@@ -350,17 +350,14 @@ body {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-/* Лёгкое затемнение, чтобы надпись читалась на ярком фото.
-   При наведении появляется серая вуаль. */
+/* Лёгкое затемнение, чтобы надпись читалась на ярком фото. */
 .directions__card::after {
     content: "";
     position: absolute;
     inset: 0;
     background: rgba(0, 0, 0, 0.25);
-    transition: background-color 0.35s ease;
 }
 
 .directions__name {
@@ -370,14 +367,6 @@ body {
     font-size: calc(36 * var(--u));
     line-height: 1;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
-}
-
-.directions__item:hover .directions__card::after {
-    background-color: rgba(128, 128, 128, 0.72);
-}
-
-.directions__item:hover .directions__img {
-    transform: scale(1.06);
 }
 
 .directions__caption {
@@ -639,28 +628,16 @@ body {
     list-style: none;
 }
 
-/* Линия: от центра первой точки, со стрелкой на конце */
+/* Линия между центрами первой и последней точек */
 .process::before {
     content: "";
     position: absolute;
     top: calc(var(--dot) / 2 - 1.5px);
     left: calc(100% / 12);
-    right: calc(100% / 12 - 48px);
+    right: calc(100% / 12);
     height: 3px;
     background: var(--orange);
     transform-origin: left center;
-}
-
-.process::after {
-    content: "";
-    position: absolute;
-    top: calc(var(--dot) / 2);
-    right: calc(100% / 12 - 50px);
-    width: 14px;
-    height: 14px;
-    border-top: 3px solid var(--orange);
-    border-right: 3px solid var(--orange);
-    transform: translateY(-50%) rotate(45deg);
 }
 
 .process__step {
@@ -692,14 +669,11 @@ body {
 }
 
 /* Анимация: JS вешает --armed, а при появлении секции — --in */
-.process--armed::before,
-.process--armed::after {
+.process--armed::before {
     transition:
-        transform 1.4s cubic-bezier(0.65, 0, 0.35, 1),
-        opacity 0.4s ease 1.2s;
+        transform 1.4s cubic-bezier(0.65, 0, 0.35, 1);
 }
 .process--armed::before { transform: scaleX(0); }
-.process--armed::after  { opacity: 0; }
 
 .process--armed .process__dot,
 .process--armed .process__label {
@@ -713,7 +687,6 @@ body {
 .process--armed .process__label { transform: translateY(16px); }
 
 .process--armed.process--in::before { transform: scaleX(1); }
-.process--armed.process--in::after  { opacity: 1; }
 .process--armed.process--in .process__dot,
 .process--armed.process--in .process__label {
     opacity: 1;
@@ -746,7 +719,6 @@ body {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .clients__item--brand .clients__logo {
@@ -759,10 +731,6 @@ body {
     font-size: max(24px, calc(48 * var(--u)));
     letter-spacing: 0.04em;
     text-transform: uppercase;
-}
-
-.clients__item:hover .clients__logo {
-    transform: scale(1.06);
 }
 
 /* --- Контакты --- */
@@ -1198,7 +1166,7 @@ body {
     }
     .section__title br { display: none; }
 
-    /* Линия процесса становится вертикальной, стрелка — вниз */
+    /* Линия процесса становится вертикальной */
     .process {
         --dot: 22px;
         grid-template-columns: 1fr;
@@ -1207,19 +1175,12 @@ body {
     }
     .process::before {
         top: calc(var(--dot) / 2);
-        bottom: -30px;
+        bottom: calc(var(--dot) / 2);
         left: calc(var(--dot) / 2 - 1.5px);
         right: auto;
         width: 3px;
         height: auto;
         transform-origin: center top;
-    }
-    .process::after {
-        top: auto;
-        bottom: -32px;
-        left: calc(var(--dot) / 2);
-        right: auto;
-        transform: translateX(-50%) rotate(135deg);
     }
     .process--armed::before { transform: scaleY(0); }
     .process--armed.process--in::before { transform: scaleY(1); }
@@ -1316,8 +1277,7 @@ body {
     }
     .footer,
     .footer__cta,
-    .footer__top,
-    .directions__img {
+    .footer__top {
         transition: none;
     }
 }
