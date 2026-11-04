@@ -652,7 +652,7 @@ body {
 }
 
 .process::after {
-    content: "";
+    content: none;
     position: absolute;
     top: calc(var(--dot) / 2);
     right: calc(100% / 12 - 50px);
