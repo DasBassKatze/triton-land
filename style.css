@@ -647,7 +647,7 @@ body {
     position: absolute;
     top: calc(var(--dot) / 2 - 1.5px);
     left: calc(100% / 12);
-    right: calc(100% / 12 - 48px);
+    right: calc(100% / 12);
     height: 3px;
     background: var(--orange);
     transform-origin: left center;
@@ -1298,7 +1298,7 @@ body {
     }
     .process::before {
         top: calc(var(--dot) / 2);
-        bottom: -30px;
+        bottom: calc(var(--dot) / 2);
         left: calc(var(--dot) / 2 - 1.5px);
         right: auto;
         width: 3px;
