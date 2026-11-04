@@ -372,14 +372,6 @@ body {
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
 }
 
-.directions__item:hover .directions__card::after {
-    background-color: rgba(128, 128, 128, 0.72);
-}
-
-.directions__item:hover .directions__img {
-    transform: scale(1.06);
-}
-
 .directions__caption {
     margin: calc(18 * var(--u)) 0 0;
     font-size: max(13px, calc(24 * var(--u)));
@@ -769,9 +761,8 @@ body {
 .section--contacts {
     overflow: hidden;
     align-items: stretch;
-    /* сверху — шапка, снизу — футер и кнопка «В начало» над ним */
-    padding-top: calc(var(--header-h) + 32px);
-    padding-bottom: calc(var(--footer-h) + 100px);
+    /* снизу — футер и висящая над ним кнопка «В начало» */
+    padding-bottom: calc(var(--footer-h) + 110px);
     background: #000;
 }
 
@@ -806,69 +797,154 @@ body {
 }
 
 .contacts {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) calc(600 * var(--u));
+    align-items: center;
+    gap: calc(80 * var(--u));
 }
 
 .contacts__logo {
     display: block;
-    width: calc(750 * var(--u));
+    width: calc(820 * var(--u));
     max-width: 100%;
     height: auto;
 }
 
 .contacts__title {
-    margin: calc(40 * var(--u)) 0 0;
-    font-size: max(24px, calc(44 * var(--u)));
+    margin: calc(60 * var(--u)) 0 0;
+    font-size: max(26px, calc(60 * var(--u)));
     font-weight: 300;
-    line-height: 1.3;
+    line-height: 1.15;
 }
 
 .contacts__list {
-    display: flex;
-    flex-direction: column;
-    gap: calc(14 * var(--u));
-    margin: calc(28 * var(--u)) 0 0;
-    padding: 0;
-    list-style: none;
-    color: rgba(255, 255, 255, 0.85);
-    font-size: max(16px, calc(26 * var(--u)));
-    line-height: 1.3;
+    margin: calc(44 * var(--u)) 0 0;
+    font-size: max(18px, calc(36 * var(--u)));
+    line-height: 1.35;
 }
 
-/* Контакты — по центру, крупно */
-.contacts__info {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: calc(40 * var(--u)) 0 0;
-    font-size: max(22px, calc(40 * var(--u)));
-    line-height: 1.3;
-    text-align: center;
+.contacts__directions {
+    margin: calc(60 * var(--u)) 0 0;
+    color: var(--orange);
+    font-size: max(16px, calc(40 * var(--u)));
+    line-height: 1.2;
 }
 
-.contacts__info-title {
+/* Карточка с контактами: стекло, светлая рамка, оранжевый акцент */
+.contacts__card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: calc(56 * var(--u)) calc(56 * var(--u)) calc(52 * var(--u));
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    border-radius: calc(18 * var(--u));
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(10px);
+    box-shadow:
+        0 30px 60px -20px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(240, 82, 34, 0.08);
+    overflow: hidden;
+}
+
+.contacts__card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--orange);
+}
+
+.contacts__card-title {
     margin: 0;
+    font-size: max(24px, calc(44 * var(--u)));
+    font-weight: 300;
+    line-height: 1.2;
 }
 
-.contacts__link {
+.contacts__card-text {
+    margin: calc(16 * var(--u)) 0 0;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: max(15px, calc(24 * var(--u)));
+    line-height: 1.35;
+}
+
+.contacts__phone,
+.contacts__email {
     color: #fff;
     text-decoration: none;
     transition: color 0.25s ease;
 }
 
-.contacts__link:hover,
-.contacts__link:focus-visible {
+.contacts__phone {
+    margin-top: calc(36 * var(--u));
+    font-size: max(26px, calc(48 * var(--u)));
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+.contacts__email {
+    margin-top: calc(10 * var(--u));
+    font-size: max(18px, calc(32 * var(--u)));
+    line-height: 1.3;
+}
+
+.contacts__phone:hover,
+.contacts__phone:focus-visible,
+.contacts__email:hover,
+.contacts__email:focus-visible {
     color: var(--orange);
 }
 
-.contacts__directions {
-    margin: calc(56 * var(--u)) 0 0;
+.contacts__actions {
+    display: flex;
+    gap: calc(16 * var(--u));
+    width: 100%;
+    margin-top: calc(40 * var(--u));
+}
+
+.contacts__btn {
+    display: inline-flex;
+    flex: 1 1 0;
+    align-items: center;
+    justify-content: center;
+    height: max(48px, calc(64 * var(--u)));
+    border: 2px solid rgba(255, 255, 255, 0.9);
+    border-radius: 6px;
+    color: #fff;
+    font-size: max(16px, calc(26 * var(--u)));
+    text-decoration: none;
+    text-shadow: none;
+    transition:
+        color 0.25s ease,
+        border-color 0.25s ease,
+        background-color 0.25s ease,
+        transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.contacts__btn:hover,
+.contacts__btn:focus-visible {
     color: var(--orange);
-    font-size: max(18px, calc(50 * var(--u)));
-    line-height: 1.2;
-    text-align: center;
+    border-color: var(--orange);
+    background-color: rgba(240, 82, 34, 0.08);
+}
+
+.contacts__btn--primary {
+    border-color: var(--orange);
+    background: var(--orange);
+}
+
+.contacts__btn--primary:hover,
+.contacts__btn--primary:focus-visible {
+    color: #fff;
+    background-color: #d8441a;
+    border-color: #d8441a;
+}
+
+.contacts__btn:active {
+    transform: scale(0.97);
 }
 
 /* ============================================================
@@ -1066,7 +1142,12 @@ body {
     .section { padding-left: 40px; padding-right: 40px; }
     .process__label { font-size: 13px; letter-spacing: 0.02em; }
     .clients__item  { flex-basis: 25%; }
-    .contacts__logo { width: 70%; }
+    .contacts {
+        grid-template-columns: 1fr;
+        gap: 48px;
+    }
+    .contacts__logo { width: 80%; }
+    .contacts__card { padding: 36px 32px 32px; border-radius: 12px; }
 
     .footer       { gap: 20px; }
     .footer__logo { width: 64px; height: 64px; }
@@ -1248,15 +1329,14 @@ body {
     .section--contacts {
         padding-bottom: calc(var(--footer-h) + 24px);
     }
+    .contacts             { gap: 32px; }
     .contacts__logo       { width: 100%; }
-    .contacts__title      { margin-top: 24px; }
-    .contacts__list       { margin-top: 16px; gap: 6px; }
-    .contacts__info       { margin-top: 32px; }
-    .contacts__directions {
-        margin-top: 32px;
-        font-size: min(18px, 4vw);
-        white-space: nowrap;
-    }
+    .contacts__title      { margin-top: 28px; }
+    .contacts__list       { margin-top: 20px; }
+    .contacts__directions { margin-top: 24px; }
+    .contacts__card       { padding: 28px 20px 24px; }
+    .contacts__phone      { margin-top: 20px; }
+    .contacts__actions    { margin-top: 24px; gap: 12px; }
 
     /* Компактный футер: логотип, две кнопки */
     .footer {
